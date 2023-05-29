@@ -1,0 +1,118 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_NOMBRE_ARCHIVO 100
+
+void crearArchivo() {
+    char nombreArchivo[MAX_NOMBRE_ARCHIVO];
+
+    printf("Ingrese el nombre del archivo a crear: ");
+    scanf("%s", nombreArchivo);
+
+    FILE* archivo = fopen(nombreArchivo, "w");
+    if (archivo == NULL) {
+        printf("Error al crear el archivo.\n");
+        return;
+    }
+
+    fclose(archivo);
+    printf("El archivo ha sido creado correctamente.\n");
+}
+
+void copiarArchivo() {
+    char nombreArchivoOrigen[MAX_NOMBRE_ARCHIVO];
+    char nombreArchivoDestino[MAX_NOMBRE_ARCHIVO];
+
+    printf("Ingrese el nombre del archivo de origen: ");
+    scanf("%s", nombreArchivoOrigen);
+
+    printf("Ingrese el nombre del archivo de destino: ");
+    scanf("%s", nombreArchivoDestino);
+
+    FILE* archivoOrigen = fopen(nombreArchivoOrigen, "r");
+    if (archivoOrigen == NULL) {
+        printf("El archivo de origen no existe o no se puede abrir.\n");
+        return;
+    }
+
+    FILE* archivoDestino = fopen(nombreArchivoDestino, "w");
+    if (archivoDestino == NULL) {
+        printf("Error al crear el archivo de destino.\n");
+        fclose(archivoOrigen);
+        return;
+    }
+
+    int caracter;
+    while ((caracter = fgetc(archivoOrigen)) != EOF) {
+        fputc(caracter, archivoDestino);
+    }
+
+    fclose(archivoOrigen);
+    fclose(archivoDestino);
+    printf("El archivo ha sido copiado correctamente.\n");
+}
+
+void eliminarArchivo() {
+    char nombreArchivo[MAX_NOMBRE_ARCHIVO];
+
+    printf("Ingrese el nombre del archivo a eliminar: ");
+    scanf("%s", nombreArchivo);
+
+    if (remove(nombreArchivo) == 0) {
+        printf("El archivo ha sido eliminado correctamente.\n");
+    } else {
+        printf("El archivo no se pudo eliminar o no existe.\n");
+    }
+}
+
+void buscarArchivo() {
+    char nombreArchivo[MAX_NOMBRE_ARCHIVO];
+    char comando[200];
+
+    printf("Ingrese el nombre del archivo a buscar: ");
+    scanf("%s", nombreArchivo);
+
+    snprintf(comando, sizeof(comando), "find . -name %s", nombreArchivo);
+    printf("Resultados de la búsqueda:\n");
+    system(comando);
+}
+
+int main() {
+    int opcion;
+
+    do {
+        printf("Sistema de Gestión de Archivos\n");
+        printf("1. Crear archivo\n");
+        printf("2. Copiar archivo\n");
+        printf("3. Eliminar archivo\n");
+        printf("4. Buscar archivo\n");
+        printf("5. Salir\n");
+        printf("Ingrese una opción: ");
+        scanf("%d", &opcion);
+
+        switch(opcion) {
+            case 1:
+                crearArchivo();
+                break;
+            case 2:
+                copiarArchivo();
+                break;
+            case 3:
+                eliminarArchivo();
+                break;
+            case 4:
+                buscarArchivo();
+                break;
+            case 5:
+                printf("Saliendo del programa...\n");
+                break;
+            default:
+                printf("Opción inválida.\n");
+        }
+
+        printf("\n");
+    } while (opcion != 5);
+
+    return 0;
+}
