@@ -1,0 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    char operator;
+    double num1, num2, result;
+
+    printf("Ingrese un operador (+, -, *, /): ");
+    scanf("%c", &operator);
+
+    printf("Ingrese dos números: ");
+    scanf("%lf %lf", &num1, &num2);
+
+    switch(operator) {
+        case '+':
+            result = num1 + num2;
+            printf("El resultado de la suma es: %.2lf\n", result);
+            break;
+        case '-':
+            result = num1 - num2;
+            printf("El resultado de la resta es: %.2lf\n", result);
+            break;
+        case '*':
+            result = num1 * num2;
+            printf("El resultado de la multiplicación es: %.2lf\n", result);
+            break;
+        case '/':
+            if (num2 != 0) {
+                result = num1 / num2;
+                printf("El resultado de la división es: %.2lf\n", result);
+            } else {
+                printf("Error: División entre cero no está definida.\n");
+            }
+            break;
+        default:
+            printf("Error: Operador inválido.\n");
+    }
+
+    return 0;
+}
