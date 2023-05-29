@@ -1,0 +1,111 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_TAREAS 100
+
+typedef struct {
+    char descripcion[100];
+    char fecha[20];
+    int prioridad;
+} Tarea;
+
+void agregarTarea(Tarea listaTareas[], int *numTareas) {
+    if (*numTareas >= MAX_TAREAS) {
+        printf("No se pueden agregar más tareas. La lista está llena.\n");
+        return;
+    }
+
+    Tarea nuevaTarea;
+    printf("Ingrese la descripción de la tarea: ");
+    fgets(nuevaTarea.descripcion, sizeof(nuevaTarea.descripcion), stdin);
+    nuevaTarea.descripcion[strcspn(nuevaTarea.descripcion, "\n")] = '\0';
+
+    printf("Ingrese la fecha de vencimiento (dd/mm/aaaa): ");
+    scanf("%s", nuevaTarea.fecha);
+
+    printf("Ingrese la prioridad de la tarea (1-5): ");
+    scanf("%d", &nuevaTarea.prioridad);
+
+    listaTareas[*numTareas] = nuevaTarea;
+    (*numTareas)++;
+
+    printf("La tarea ha sido agregada correctamente.\n");
+}
+
+void mostrarTareas(Tarea listaTareas[], int numTareas) {
+    if (numTareas == 0) {
+        printf("No hay tareas en la lista.\n");
+        return;
+    }
+
+    printf("Lista de tareas:\n");
+    for (int i = 0; i < numTareas; i++) {
+        printf("Tarea %d:\n", i + 1);
+        printf("Descripción: %s\n", listaTareas[i].descripcion);
+        printf("Fecha de vencimiento: %s\n", listaTareas[i].fecha);
+        printf("Prioridad: %d\n\n", listaTareas[i].prioridad);
+    }
+}
+
+void eliminarTarea(Tarea listaTareas[], int *numTareas) {
+    if (*numTareas == 0) {
+        printf("No hay tareas en la lista para eliminar.\n");
+        return;
+    }
+
+    int indice;
+    printf("Ingrese el número de la tarea que desea eliminar: ");
+    scanf("%d", &indice);
+    indice--;
+
+    if (indice < 0 || indice >= *numTareas) {
+        printf("Índice inválido.\n");
+        return;
+    }
+
+    for (int i = indice; i < *numTareas - 1; i++) {
+        listaTareas[i] = listaTareas[i + 1];
+    }
+
+    (*numTareas)--;
+    printf("La tarea ha sido eliminada correctamente.\n");
+}
+
+int main() {
+    Tarea listaTareas[MAX_TAREAS];
+    int numTareas = 0;
+    int opcion;
+
+    do {
+        printf("Gestor de Tareas\n");
+        printf("1. Agregar tarea\n");
+        printf("2. Mostrar tareas\n");
+        printf("3. Eliminar tarea\n");
+        printf("4. Salir\n");
+        printf("Ingrese una opción: ");
+        scanf("%d", &opcion);
+
+        switch(opcion) {
+            case 1:
+                getchar();  // Limpiar el buffer del teclado antes de llamar a fgets
+                agregarTarea(listaTareas, &numTareas);
+                break;
+            case 2:
+                mostrarTareas(listaTareas, numTareas);
+                break;
+            case 3:
+                eliminarTarea(listaTareas, &numTareas);
+                break;
+            case 4:
+                printf("Saliendo del programa...\n");
+                break;
+            default:
+                printf("Opción inválida.\n");
+        }
+
+        printf("\n");
+    } while (opcion != 4);
+
+    return 0;
+}
