@@ -15,7 +15,7 @@ void efectivo(int *numprod) {
         system("cls");
 
         if (precio <= 0) {
-            printf("Precio ingresado inválido.\n");
+            printf("Precio ingresado invÃ¡lido.\n");
             continue;
         }
 
@@ -38,7 +38,7 @@ void vueltoe(int numprod) {
         scanf("%f", &precio);
 
         if (precio <= 0) {
-            printf("Precio ingresado inválido.\n");
+            printf("Precio ingresado invÃ¡lido.\n");
             continue;
         }
 
@@ -664,7 +664,7 @@ int main() {
 	///////////////////////////////////////////// SWITCH OPCUOTAS 12 cuotas fim/////////////////////////////////////////////////////////////////////////
 	 				}
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
-	                    // Código para la opción 2 - Tarjeta Mastercard
+	                    // CÃ³digo para la opciÃ³n 2 - Tarjeta Mastercard
 	                    break;
 	                case 3:
 	                	system("cls");
